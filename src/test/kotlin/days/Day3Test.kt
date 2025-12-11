@@ -19,6 +19,8 @@ class Day3Test : AdventOfCodeTest {
     @Test
     override fun solvePart1Test() {
         assertEquals("357", day.solvePart1(input))
+        assertEquals("53", day.solvePart1(listOf("2212122322222322252322212232223221132122212123212332221211222232222221123232122212332222222213222223")))
+
     }
 
     @Test
