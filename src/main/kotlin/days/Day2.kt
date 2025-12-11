@@ -20,7 +20,6 @@ class Day2 : Day(2, "Gift Shop") {
         return buildList {
             for (i in start..end) {
                 val number = i.toString()
-                if (number.startsWith('0')) continue
                 if (number.length % 2 == 1) continue
 
                 number.chunked(number.length / 2)
@@ -48,7 +47,6 @@ class Day2 : Day(2, "Gift Shop") {
         return buildList {
             for (i in start..end) {
                 val number = i.toString()
-                if (number.startsWith('0')) continue
 
                 (number.length / 2 downTo 1).forEach { chunkSize ->
                     number.chunked(chunkSize)
