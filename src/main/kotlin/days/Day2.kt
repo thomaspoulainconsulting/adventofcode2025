@@ -8,7 +8,7 @@ class Day2 : Day(2, "Gift Shop") {
             .split(",")
             .sumOf { range ->
                 val (start, end) = range.split("-")
-                findInvalidProductId(start.toLong(), end.toLong()).sum()
+                findInvalidProductIdPart1(start.toLong(), end.toLong()).sum()
             }.toString()
     }
 
@@ -16,25 +16,49 @@ class Day2 : Day(2, "Gift Shop") {
      * - starts with 0 -> not an ID
      * - sequence of digits repeated twice -> a valid ID
      */
-    private fun findInvalidProductId(start: Long, end: Long): List<Long> {
+    private fun findInvalidProductIdPart1(start: Long, end: Long): List<Long> {
         return buildList {
-            for (i in start ..end) {
-                if (i.toChar() == '0') continue
-                if (i.toString().length % 2 == 1) continue
+            for (i in start..end) {
+                val number = i.toString()
+                if (number.startsWith('0')) continue
+                if (number.length % 2 == 1) continue
 
-                // on split en deux le chiffre
-                val firstPart = i.toString().substring(0, i.toString().length/2)
-                val lastPart = i.toString().substring(i.toString().length/2, i.toString().length)
-
-                if (firstPart == lastPart) {
-                    add(i)
-                }
+                number.chunked(number.length / 2)
+                    .takeIf { it.first() == it.last() }
+                    ?.let { add(i) }
             }
         }
     }
 
-
     override fun solvePart2(input: List<String>): String {
-        TODO("Not yet implemented")
+        return ""
+        return input
+            .first()
+            .split(",")
+            .sumOf { range ->
+                val (start, end) = range.split("-")
+                findInvalidProductIdPart2(start.toLong(), end.toLong()).sum()
+            }.toString()
+    }
+
+    /**
+     * - starts with 0 -> not an ID
+     * - sequence of digits repeated twice -> a valid ID
+     */
+    private fun findInvalidProductIdPart2(start: Long, end: Long): List<Long> {
+        return buildList {
+            for (i in start..end) {
+                val number = i.toString()
+                if (number[0] == '0') continue
+
+                // créer les parts de 1 à length/2
+                // exemple 11, 1010, 123123
+                val parts = mutableListOf<String>()
+                for (partSize in 1..number.length / 2) {
+                    parts.addAll(number.chunked(partSize))
+                }
+                println(parts)
+            }
+        }
     }
 }
